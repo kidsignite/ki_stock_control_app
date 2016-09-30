@@ -1,0 +1,77 @@
+<ion-view view-title="Instructor Feedback" ng-app="starter" ng-controller="qaCtrl" >
+        <ion-content class="padding">
+         <!--  <h3>Add Produce</h3>
+          <br/>
+          <label class="item item-input">
+            <span class="input-label">Code</span>
+            <input type="text">
+          </label>
+
+          <br/>
+
+         <label class="item item-input">
+            <span class="input-label">Rate</span>
+            <input type="number">
+          </label>
+          <br/>
+           <label class="item item-input">
+            <span class="input-label">Name</span>
+            <input type="text">
+          </label>
+
+        <br/>
+           <label class="item item-input">
+            <span class="input-label">Description</span>
+            <input type="text">
+          </label>
+          <br/>
+ 
+
+          <div>
+            <div style="float: left"> 
+              
+                   <p>
+            <a class="button icon ion-home" href="#/tab/home"> Cancel</a>
+            <!-- <a class="button icon icon-right ion-chevron-right" href="#/tab/facts2">More Facts</a> -->
+            
+
+            <br><br><br><br><br><br>
+ <div class="list"  > 
+
+  
+   <div ng-repeat="qa in result ">
+   <h1>{{qa}}</h1>
+   </div>
+<br/>
+<fieldset class="rating">
+    <input type="radio" id="star5" ng-model="rate.value"  ng-click="check()" name="rating1" ng-value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+
+    <input type="radio" id="star4half" ng-model="rate.value"  ng-click="check()" name="rating2" ng-value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+
+    <input type="radio" id="star4" ng-model="rate.value"  ng-click="check()" name="rating3" ng-value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+
+    <input type="radio" id="star3half" ng-model="rate.value"  ng-click="check()" name="rating4" ng-value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+
+    <input type="radio" id="star3" ng-model="rate.value"  ng-click="check()" name="rating5" ng-value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+
+    <input type="radio" id="star2half"  ng-model="rate.value"  ng-click="check()" name="rating6" ng-value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+
+    <input type="radio" id="star2" ng-model="rate.value"  ng-click="check()" name="rating7" ng-value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+
+    <input type="radio" id="star1half" ng-model="rate.value"  ng-click="check()"  name="rating8" ng-value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+
+    <input type="radio" id="star1"  ng-model="rate.value"  ng-click="check()" name="rating9" ng-value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+
+    <input type="radio" id="starhalf" ng-model="rate.value"  ng-click="check()" name="rating10" ng-value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+</fieldset>
+
+
+ <input type="text" placeholder="0.0"  ng-model="rate.value" disabled >
+
+<button class="button button-calm" ng-click="back()">back</button>
+</div>
+ 
+          
+
+        </ion-content>
+      </ion-view>

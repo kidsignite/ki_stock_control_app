@@ -1,0 +1,66 @@
+<!-- <ion-view view-title="Home">
+        <ion-content class="padding">
+          <p>
+            <a class="button icon icon-right ion-chevron-right" href="#/tab/facts">Scientific Facts</a>
+          </p>
+        </ion-content>
+      </ion-view>
+ -->
+    <ion-view view-title="Home" ng-controller="studentCheckCtrl">
+  <ion-content>
+
+<br><br>
+    <center>
+       
+<!-- <div ng-show="show"> -->
+      <div class="row">
+        <div class="col">
+            <button class="button button-block button-outline button-assertive" ng-click="addQrCodetoStudent(student)">
+            Add Student Barcode
+</button>
+
+  </div>
+      </div>
+<div class="row">
+        <div class="col">
+<!-- <p>{{studentsdata}}</p>
+ -->         </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+      <ion-select label="Select Student Registration Number" label-field="Registration_No" provider="studentsdata"  ng-model="student"/>
+
+         </div>
+      </div>
+
+
+<!-- </div> -->
+
+    </center>
+  </ion-content>
+ 
+  <!-- <ion-tabs class="tabs-positive tabs-icon-top">
+
+  <ion-tab title="Home" icon-on="ion-ios-home" icon-off="ion-ios-home-outline">
+   </ion-tab>
+
+  <ion-tab title="About" icon-on="ion-ios-paper" icon-off="ion-ios-paper-outline">
+   </ion-tab>
+
+  <ion-tab title="Settings" icon-on="ion-ios-people" icon-off="ion-ios-people-outline">
+   </ion-tab>
+
+   <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
+   </ion-tab>
+
+   <ion-tab title="Settings" icon-on="ion-ios-flask" icon-off="ion-ios-flask-outline">
+   </ion-tab>
+
+
+</ion-tabs> -->
+
+
+
+
+</ion-view>
