@@ -10,7 +10,7 @@
         <div class="col">
                    <h4>Activity: {{APIresponse.activity_id}}</h4>
                    <h4>Re-order Level: {{APIresponse.reorder}}</h4>
-                   <h4 style="color:red; ng-show="APIresponse.quantity_balance<APIresponse.reorder">Balance: {{APIresponse.quantity_balance}}</h4>
+                   <h4 ng-hide="APIresponse.quantity_balance>APIresponse.reorder" style="color:red; ng-show="APIresponse.quantity_balance<APIresponse.reorder">Balance: {{APIresponse.quantity_balance}}</h4>
                    <h4 ng-show="APIresponse.quantity_balance>APIresponse.reorder">Balance: {{APIresponse.quantity_balance}}</h4>
         </div>
      

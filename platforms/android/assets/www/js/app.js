@@ -1,92 +1,4 @@
-var ionicSelect = angular.module('ionicSelect',[]);
-
-ionicSelect.directive('ionSelect',function(){
-    'use strict';
-    return{
-        restrict: 'EAC',
-        scope: {
-           label:'@',
-            labelField:'@',
-            provider:'=',
-            ngModel: '=?',
-            ngValue: '=?',
-           
-        },
-         require: '?ngModel',
-         transclude : false,
-         replace: false,
-        template:
-                    '<div class="selectContainer">'
-                        +'<label class="item item-input item-stacked-label">' 
-                            +'<span class="input-label">{{label}}</span>'
-                            +'<div class="item item-input-inset">'
-                                +'<label class="item-input-wrapper">'
-                                    +'<i class="icon ion-ios7-search placeholder-icon"></i>'
-                                    +'<input id="filtro" type="search"  ng-model="ngModel" ng-value="ngValue" ng-keydown="onKeyDown()"/>'
-                                +'</label>'
-                                +'<button class="button button-small button-clear" ng-click="open()">'
-                                    +'<i class="icon ion-chevron-down"></i>'
-                                +'</button>'
-                            +'</div>' 
-                        +'</label>'
-                        +'<div class="optionList padding-left padding-right" ng-show="showHide">'
-        +'<ion-scroll>'
-                            +'<ul class="list">'
-        +'<li class="item" ng-click="selecionar(item)" ng-repeat="item in provider | filter:ngModel">{{item[labelField]}}</li>'                    
-                            +'</ul>'
-        +'</ion-scroll>'
-                        +'</div>'    
-                    +'</div>'
-             ,
-        link: function (scope, element, attrs,ngModel) {
-            scope.ngValue = scope.ngValue !== undefined ? scope.ngValue :'item';
-            
-            scope.selecionar = function(item){
-                ngModel.$setViewValue(item);
-                scope.showHide = false;
-            };
-            
-            element.bind('click',function(){
-                element.find('input').focus();
-            });
-            
-            scope.open = function(){
-                
-                  scope.ngModel = "";  
-                return scope.showHide=!scope.showHide;
-            };
-            
-            scope.onKeyDown = function(){
-                scope.showHide = true;
-                if(!scope.ngModel){
-                     scope.showHide = false;
-                }
-            }
-            
-            scope.$watch('ngModel',function(newValue){
-                if(newValue)
-           element.find('input').val(newValue[scope.labelField]);
-               
-            });
-        },
-    };
-});
-
-
-
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-var count = 0 ;
-var arr;
-var rate = [];
-var rating;
-var id = 0;
-
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionicSelect'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-ratings'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -111,75 +23,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionicSe
   $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
 
   $stateProvider
-
-  //   .state('app', {
-  //   url: '/app',
-  //   abstract: true,
-  //   templateUrl: 'templates/menu.html',
-  //   controller: 'AppCtrl'
-  // })
-
-  // .state('app.search', {
-  //   url: '/search',
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: 'templates/search.html'
-  //     }
-  //   }
-  // })
-
-  // .state('app.home', {
-  //     url: '/home',
-  //     views: {
-  //       'menuContent': {
-  //         templateUrl: 'templates/home.html'
-  //       }
-  //     }
-  //   })
-  //   // .state('app.playlists', {
-  //   //   url: '/playlists',
-  //   //   views: {
-  //   //     'menuContent': {
-  //   //       templateUrl: 'templates/playlists.html',
-  //   //       controller: 'PlaylistsCtrl'
-  //   //     }
-  //   //   }
-  //   // })
-  //   .state('app.sessions', {
-  //     url: "/sessions",
-  //     views: {
-  //         'menuContent': {
-  //             templateUrl: "templates/sessions.html",
-  //             controller: 'SessionsCtrl'
-  //         }
-  //     }
-  //   })
-
-  // // .state('app.single', {
-  // //   url: '/playlists/:playlistId',
-  // //   views: {
-  // //     'menuContent': {
-  // //       templateUrl: 'templates/playlist.html',
-  // //       controller: 'PlaylistCtrl'
-  // //     }
-  // //   }
-  // // });
-  // .state('app.session', {
-  //   url: "/sessions/:sessionId",
-  //   views: {
-  //       'menuContent': {
-  //         templateUrl: "templates/session.html",
-  //         controller: 'SessionCtrl'
-  //       }
-  //     }
-  // });
-
-  //  .state('app', {
-  //   url: '/app',
-  //   abstract: true,
-  //   templateUrl: 'templates/menu.html',
-  //   controller: 'AppCtrl'
-  // })
 
   .state('tabs', {
       url: "/tab",
@@ -287,15 +130,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionicSe
   var apiService = this;
   apiService.sharedObject = {};
 
-  apiService.getStudentInfo = function(){
+
+  apiService.getPackInfo = function(){
      return apiService.sharedObject;
   }
 
-  apiService.setStudentInfo = function(value){
+  apiService.setPackInfo = function(value){
     apiService.sharedObject = {};
 
     apiService.sharedObject = value;
   }
+
+  
 })
 
 .controller('HomeTabCtrl', function($scope) {
@@ -304,200 +150,182 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionicSe
 
 
 
- .controller('qaCtrl', function($scope, $http,$state) {
- $scope.rate = {};
- $scope.result = arr[count];
- var date = new Date(); 
- var student = 0;
- var Week = 0; 
  
-  
 
+.controller('MainMenuCtrl', function($scope, $cordovaBarcodeScanner, $http, $state, $ionicLoading, apiService,  $ionicPopup) {
 
-  $scope.check = function() {
-  rating  = $scope.rate.value;
-  
+    $scope.APIresponse = apiService.getPackInfo();
 
-   
-              if(rate.length == 0){
-              if(rate[count]== undefined ){
-       
-        id = arr[count].question_id;
-        rate.push({question_id:id,question:arr[count],rating:rating,date:date,student_reg_no:student,week : Week});
-        $scope.rate.value = 0;
-        count = count +1 ;
-       
-        
-        $scope.result = arr[count];
-
-              
-
-              } else{ 
-                 
-         rate[count].rate = rating ;
-        
-         count = count +1 ;
-         id = arr[count].question_id;
-         
-                    $scope.result = arr[count];
-       
-
-}  
-      
-    }
-              else{
-                 if(rate[count]== undefined ){
-                id = arr[count].question_id;
-                rate.push({question_id:id,question:arr[count],rating:rating,date:date,student_reg_no:student,week:Week});
-                $scope.rate.value = 0;
-                 
-                count = count +1 ;
-               
-                
-               if(count>arr.length-1){
-                console.log("done");
-
-                //post request 
-
-
-
-var request = {
-   method: 'POST',
-   contentType:'application/json',
-   url: 'https://script.google.com/macros/s/AKfycbwHaGlRE6Lk_S2BnnQ6ed4oBloTOOeKJHBJLPaEcdEhQncCga_G/exec?results=' +rate,
-   headers: {'Content-Type': undefined},
-   //data: { test: 'test' }
-};
-
-$http(request).then(function(response) {
-  console.log(response);
-}, function(error) {
-  alert("error");
-});
-
-
-
-               
-
-              } else{
-              $scope.result = arr[count];
-              }
-
-
-                 }
-
-                 else{
-                   rate[count].rate = rating ;
-                   console.log("ok r" +rate[count]);
-                   count = count +1 ;
-                   
-                    $scope.result = arr[count];
-                 }
-            
-               
-              
-              }
-              
-            
-
-
-  console.log(rate);     
-
-  
-        
-      
-
-  };
-
-  $scope.back = function() {
-
-              if(rate.length == 0){
-        $scope.result = arr[count];
-                  }
-              else{
-               if(count<0){
-                console.log("low");
-               
-
-
-              } else{
-                 count = count -1 ;
-                 $scope.rate.value = 0;
-              if(count == -1 ){
-                  alert("There is no");
-              }else{
-
-console.log(rate[count]);
-$scope.rate.value = rate[count].rating;
-console.log("rate  set = "+rate[count].rating);
-                
-              }
-             
-              $scope.result = arr[count];
-              }
-               
-              
-              }
-              
- // console.log(rate);
-   console.log(count);     
-      
-
-  };
-  
-  
- 
-})
-
-.controller('BarcodeCtrl', function($scope, $cordovaBarcodeScanner, $http, $state, $ionicLoading, apiService) {
-
-    $scope.APIresponse = apiService.getStudentInfo();
-
-
-      // verifyQRCode(2);
-
-       if(!arr){
-           $http.get("https://script.google.com/macros/s/AKfycbwCBI06okNRN5Ms22i5Aj6Ej_gBi1NimtPKQ4M31y2eq8qyYEU/exec", {})
-    .success(function (response) {
-                if (response.hasError) {
-                  console.log("Error")
-                } else {
-                  console.log("Success")
-                  console.log(response.data)
-                 arr = response.data;
-               
-              
-                }
-
-            })
-    .error(function (response) {
-              console.log("Response error")
-              console.log(response)
-               
-            });
-       }             
-  
-  
-
-  
-   
-
-})
-
-.controller('StudentDetailsCtrl', function($scope, $cordovaBarcodeScanner, $http, $state, $ionicLoading, apiService) {
-
-    $scope.APIresponse = apiService.getStudentInfo();
     console.log($scope.APIresponse);
 
+    $scope.addPackstoStock = function(quantity){
+        console.log(quantity);
+       if(quantity!="" && quantity!=null && quantity!=undefined){
+          var confirmPopup = $ionicPopup.confirm({
+             title: 'Confirm?',
+             template: 'Are you sure you want to add this pack quantity to stock?'
+           });
+
+           confirmPopup.then(function(res) {
+             if(res) {
+
+                $ionicLoading.show({
+                  content: 'Loading',
+                  animation: 'fade-in',
+                  showBackdrop: true,
+                  maxWidth: 200,
+                  showDelay: 0
+                });
+
+               var url = "https://script.google.com/macros/s/AKfycbwDDFvPu1OzYzybL8_6xUkRnR52D5re86bHdXYnnx8esC_RtRFw/exec?qrcode="+$scope.APIresponse.qr_code+"&operation=add&quantity=" +quantity;
+
+                $http.get(url)
+                .then(function(response) {
+                    $ionicLoading.hide();
+
+                    var alertPopup = $ionicPopup.alert({
+                       title: 'Success!',
+                       template: 'Quantity added to pack stock!'
+                     });
+
+                     alertPopup.then(function(res) {
+                       // reloadData($scope.APIresponse.qr_code);
+                       $scope.APIresponse.quantity_balance = parseInt($scope.APIresponse.quantity_balance) + parseInt(quantity);
+                        $scope.quantity = undefined;
+                     });
+
+
+                     
+                });
+             } else {
+               console.log('You are not sure');
+             }
+           });
+       }else{
+          var alertPopup = $ionicPopup.alert({
+             title: 'Error!',
+             template: 'Insert the quantity before adding!'
+           });
+
+           alertPopup.then(function(res) {
+             console.log('Done!');
+           });
+       }
+
+
+        
+    }
+
+
+    $scope.removePacksfromStock = function(quantity){
+       if(parseInt($scope.APIresponse.quantity_balance)!=0){
+          if(quantity!="" && quantity!=null && quantity!=undefined){
+            var confirmPopup = $ionicPopup.confirm({
+               title: 'Confirm?',
+               template: 'Are you sure you want to remove this pack quantity from stock?'
+             });
+
+             confirmPopup.then(function(res) {
+               if(res) {
+
+                  $ionicLoading.show({
+                    content: 'Loading',
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                  });
+
+                 var url = "https://script.google.com/macros/s/AKfycbwDDFvPu1OzYzybL8_6xUkRnR52D5re86bHdXYnnx8esC_RtRFw/exec?qrcode="+$scope.APIresponse.qr_code+"&operation=sub&quantity=" +quantity;
+
+                  $http.get(url)
+                  .then(function(response) {
+                      $ionicLoading.hide();
+
+                      var alertPopup = $ionicPopup.alert({
+                         title: 'Success!',
+                         template: 'Quantity removed from pack stock!'
+                       });
+
+                       alertPopup.then(function(res) {
+                         // reloadData($scope.APIresponse.qr_code);
+                         $scope.APIresponse.quantity_balance = parseInt($scope.APIresponse.quantity_balance) - parseInt(quantity);
+                          $scope.quantity = undefined;
+                       });
+
+                       
+
+                       
+                  });
+               } else {
+                 console.log('You are not sure');
+               }
+             });
+         }else{
+            var alertPopup = $ionicPopup.alert({
+               title: 'Error!',
+               template: 'Insert the quantity before removing!'
+             });
+
+             alertPopup.then(function(res) {
+               console.log('Done!');
+             });
+         }
+       }else{
+           var alertPopup = $ionicPopup.alert({
+                         title: 'Error!',
+                         template: 'There is no packs in stock to remove!'
+                       });
+
+                       alertPopup.then(function(res) {
+
+                       });
+       }
+
+
+        
+    }
+
+    // function reloadData(qrcode){
+    //   $ionicLoading.show({
+    //     content: 'Loading',
+    //     animation: 'fade-in',
+    //     showBackdrop: true,
+    //     maxWidth: 200,
+    //     showDelay: 0
+    //   });
+
+    //   $http.get("https://script.google.com/macros/s/AKfycbwDDFvPu1OzYzybL8_6xUkRnR52D5re86bHdXYnnx8esC_RtRFw/exec?qrcode="+qrcode, {})
+    //   .success(function (response) {
+
+    //               if (response.hasError) {
+    //                 console.log("Error")
+    //               } else {
+    //                 console.log("Success");
+    //                 console.log($scope.APIresponse);
+    //                  $ionicLoading.hide();
+                   
+    //                 $scope.APIresponse = response.infos;
+                     
+    //               }
+
+    //           })
+    //   .error(function (response) {
+    //             console.log("Response error")
+    //             console.log(response)
+                 
+    //           });
+    //  }
+    
 
 })
 
-.controller('studentCheckCtrl', function($scope, $http,$state, $cordovaBarcodeScanner, $ionicLoading, apiService) {
 
+.controller('stockCheckCtrl', function($scope, $http,$state, $cordovaBarcodeScanner, $ionicLoading, apiService, $ionicPopup, $timeout) {
+$scope.showFlag = false;
 $scope.show = false;
-  // verifyQRCode("y8y89y9");
  
-  // $scope.barcodeVal = 422313002342422442243;
+  // $scope.barcodeVal = "N1488916";
 
   // verifyQRCode($scope.barcodeVal);
 
@@ -506,65 +334,9 @@ $scope.show = false;
     openBarcodeScanner();
   }, false);
 
- $scope.test = function(modVal){
-          console.log(modVal);
-        }
-
-  $scope.loadStudentInformation = function(){
-    // alert("load Student info");
-
-    $ionicLoading.show({
-      content: 'Loading',
-      animation: 'fade-in',
-      showBackdrop: true,
-      maxWidth: 200,
-      showDelay: 0
-    });
-
-    $http.get("https://script.google.com/macros/s/AKfycbwym9Io9DP7VJHlcypXa8bJ-5DhfXr-DzrvMszDkVr548a_bqkW/exec")
-    .then(function(response) {
-        $scope.status = "false";
-        $ionicLoading.hide();
-
-        $scope.students = response.data;
-        console.log($scope.students);
-
-        var data  = response.data.data;
-        $scope.studentsdata = data;
-
-        console.log($scope.studentsdata);
-
-         $scope.addQrCodetoStudent = function(modVal){
-
-          apiService.setStudentInfo(modVal);
-
-          console.log(modVal);
-
-
-          // alert("button pressed " + modVal);
-          $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-          });
-
-
  
-          var requrl = "https://script.google.com/macros/s/AKfycbwym9Io9DP7VJHlcypXa8bJ-5DhfXr-DzrvMszDkVr548a_bqkW/exec?qrcode="+ $scope.barcodeVal +"&regno="+modVal.Registration_No;
-
-          $http.get(requrl)
-          .then(function(response) {
-              console.log(response);
-              $ionicLoading.hide();
-
-              $state.go('tabs.mainmenu');
-
-          });  
-
-        }
-    });
+  $scope.scanBarcode = function(){
+    openBarcodeScanner();
   }
 
   function openBarcodeScanner(){
@@ -602,7 +374,7 @@ $scope.show = false;
       showDelay: 0
     });
 
-    $http.get("https://script.google.com/macros/s/AKfycbwym9Io9DP7VJHlcypXa8bJ-5DhfXr-DzrvMszDkVr548a_bqkW/exec?qrcode="+qrcode, {})
+    $http.get("https://script.google.com/macros/s/AKfycbwDDFvPu1OzYzybL8_6xUkRnR52D5re86bHdXYnnx8esC_RtRFw/exec?qrcode="+qrcode, {})
     .success(function (response) {
 
                 if (response.hasError) {
@@ -612,22 +384,36 @@ $scope.show = false;
 
                    $ionicLoading.hide();
                  
-                   faq = response.infos;
                    console.log(response.infos);
                    $scope.APIresponse = response.infos;
                    console.log(response);
                   
                     if($scope.APIresponse.length!=0){
                       
-                      apiService.setStudentInfo($scope.APIresponse[0]);
 
+                      var data = $scope.APIresponse[0];
+
+                      var obj = {
+                          "activity_id" : data.activity_id,
+                          "reorder" : parseInt(data.reorder),
+                          "quantity_balance" : parseInt(data.quantity_balance),
+                          "qr_code" : data.qr_code
+                      };
+
+                      apiService.setPackInfo(obj);
+                      $scope.showFlag = true;
                       $state.go('tabs.mainmenu');
-                    }else if($scope.APIresponse.length==0){
-                      $scope.show = true;
-                      // alert($scope.show);
 
-                  
-                      $scope.loadStudentInformation();
+                    }else if($scope.APIresponse.length==0){
+
+                      var alertPopup = $ionicPopup.alert({
+                         title: 'Error!',
+                         template: 'Invalid QR Code'
+                       });
+
+                       alertPopup.then(function(res) {
+                         console.log('Done');
+                       });
                     }
                 }
 

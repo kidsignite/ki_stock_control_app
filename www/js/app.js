@@ -322,19 +322,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-r
 
 
 .controller('stockCheckCtrl', function($scope, $http,$state, $cordovaBarcodeScanner, $ionicLoading, apiService, $ionicPopup, $timeout) {
-
+$scope.showFlag = false;
 $scope.show = false;
  
-  $scope.barcodeVal = 1;
+  // $scope.barcodeVal = "N1488916";
 
-  verifyQRCode($scope.barcodeVal);
-
- 
-  // document.addEventListener("deviceready", function () {
-  //   openBarcodeScanner();
-  // }, false);
+  // verifyQRCode($scope.barcodeVal);
 
  
+  document.addEventListener("deviceready", function () {
+    openBarcodeScanner();
+  }, false);
+
+ 
+  $scope.scanBarcode = function(){
+    openBarcodeScanner();
+  }
 
   function openBarcodeScanner(){
     $cordovaBarcodeScanner
@@ -398,7 +401,7 @@ $scope.show = false;
                       };
 
                       apiService.setPackInfo(obj);
-
+                      $scope.showFlag = true;
                       $state.go('tabs.mainmenu');
 
                     }else if($scope.APIresponse.length==0){

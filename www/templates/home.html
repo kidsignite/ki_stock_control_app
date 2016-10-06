@@ -7,10 +7,17 @@
       </ion-view>
  -->
     <ion-view view-title="Home" ng-controller="stockCheckCtrl">
-  <ion-content>
 
-    
-  </ion-content>
+
+  <ion-content class="center">
+           <div class="row" ng-show="showFlag">
+  <div class="col">
+    <button class="button button-block button-positive" ng-click="scanBarcode()">
+      + Scan Another 
+    </button>
+  </div>
+</div>
+    </ion-content>
  
   <!-- <ion-tabs class="tabs-positive tabs-icon-top">
 
