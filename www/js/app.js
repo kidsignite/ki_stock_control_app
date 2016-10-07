@@ -345,7 +345,12 @@ $scope.show = false;
       .then(function(barcodeData) {
         // alert(barcodeData.text);
         $scope.barcodeVal = barcodeData.text;
-        verifyQRCode($scope.barcodeVal);
+
+        if($scope.barcodeVal!="" && $scope.barcodeVal!=null && $scope.barcodeVal!=undefined){
+          verifyQRCode($scope.barcodeVal);
+        }else{
+          $scope.showFlag = true;
+        }
         // Success! Barcode data is here
       }, function(error) {
         // An error occurred

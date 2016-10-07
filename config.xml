@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.conference168222" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>KidsIgnite Pack Control</name>
+  <name>Pack Control</name>
   <description>
         This App is used to manage the Packs for KidsIgnite
     </description>
